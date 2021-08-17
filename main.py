@@ -60,7 +60,7 @@ def create_recipe():
 
     return jsonify(recipe), HTTPStatus.CREATED
 
-"""Now we want to  setup a piece of code for updating recipes. 
+"""Setup a piece of code for updating recipes. 
 Feel free to reuse the same loop code snippet from before!"""
 
 @app.route("/recipes/<int:recipe_id>", methods=["PUT"])
@@ -80,6 +80,19 @@ def update_recipe(recipe_id):
     )
 
     return jsonify(recipe)
+
+"""Setup a piece of code for deleting recipes. """
+
+@app.route("/recipes/<int:recipe_id>", methods=["Delete"])
+def delete_recipe(recipe_id):
+    recipe = next((recipe for recipe in recipes if recipe["id"] == recipe_id), None)
+
+    if not recipe:
+        return jsonify({"message": "recipe not found"}), HTTPStatus.NOT_FOUND
+
+    recipes.remove(recipe)
+
+    return "", HTTPStatus.NO_CONTENT
 
 if __name__ == "__main__":
     app.run()
